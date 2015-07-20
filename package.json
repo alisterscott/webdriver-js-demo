@@ -1,0 +1,24 @@
+{
+  "name": "webdriver-js-demo",
+  "version": "1.0.0",
+  "description": "An example webdriver-js project to see how this works on circle CI",
+  "main": "index.js",
+  "dependencies": {
+    "mocha": "^2.2.5",
+    "selenium-webdriver": "^2.46.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha specs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alisterscott/webdriver-js-demo.git"
+  },
+  "author": "Alister Scott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alisterscott/webdriver-js-demo/issues"
+  },
+  "homepage": "https://github.com/alisterscott/webdriver-js-demo#readme"
+}
