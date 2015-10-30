@@ -4,8 +4,8 @@
   "description": "An example webdriver-js project to see how this works on circle CI",
   "main": "index.js",
   "dependencies": {
-    "mocha": "^2.2.5",
-    "selenium-webdriver": "^2.46.1"
+    "mocha": "2.2.5",
+    "selenium-webdriver": "2.46.1"
   },
   "devDependencies": {},
   "scripts": {
