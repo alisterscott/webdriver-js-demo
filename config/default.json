@@ -1,0 +1,5 @@
+{
+  "url": "http://ralphsays.github.io",
+  "explicitWaitMS": 2000,
+  "mochaTimeoutMS": 30000
+}
