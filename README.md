@@ -13,3 +13,8 @@ Build status: ![Build Status](https://circleci.com/gh/alisterscott/webdriver-js-
 #### To run the specs
 
 `mocha specs`
+
+
+    "mocha": "2.2.5",
+    "selenium-webdriver": "2.46.1",
+    "config": "1.16.0"
