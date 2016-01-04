@@ -12,7 +12,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha specs"
+    "test": "mocha --compilers js:babel-core/register specs"
   },
   "repository": {
     "type": "git",
