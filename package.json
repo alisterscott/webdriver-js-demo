@@ -4,8 +4,8 @@
   "description": "An example webdriver-js project to see how this works on circle CI",
   "main": "index.js",
   "dependencies": {
-    "babel-core": "^6.1.2",
-    "babel-preset-es2015": "^6.1.2",
+    "babel-core": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
     "config": "^1.16.0",
     "mocha": "^2.3.3",
     "selenium-webdriver": "2.47.0"
