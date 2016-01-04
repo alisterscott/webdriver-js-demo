@@ -19,14 +19,9 @@
     "url": "git+https://github.com/alisterscott/webdriver-js-demo.git"
   },
   "author": "Alister Scott",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/alisterscott/webdriver-js-demo/issues"
   },
-  "homepage": "https://github.com/alisterscott/webdriver-js-demo#readme",
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  }
+  "homepage": "https://github.com/alisterscott/webdriver-js-demo#readme"
 }
