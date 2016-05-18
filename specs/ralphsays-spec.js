@@ -4,17 +4,16 @@ import test from 'selenium-webdriver/testing';
 import config from 'config';
 import RalphSaysPage from '../lib/ralph-says-page.js';
 
-let driver = null;
+let driver;
 
 const mochaTimeoutMS = config.get( 'mochaTimeoutMS' );
 
-test.before( function() {
-	this.timeout( mochaTimeoutMS );
-	driver = new webdriver.Builder().withCapabilities( webdriver.Capabilities.chrome() ).build();
-} );
-
 test.describe( 'Ralph Says', function() {
 	this.timeout( mochaTimeoutMS );
+
+	test.before( function() {
+		driver = new webdriver.Builder().withCapabilities( webdriver.Capabilities.chrome() ).build();
+	} );
 
 	test.it( 'shows a quote container', function() {
 		var page = new RalphSaysPage( driver, true );
@@ -29,8 +28,8 @@ test.describe( 'Ralph Says', function() {
 			assert.notEqual( text, '', 'Quote is empty' );
 		} );
 	} );
+
+	test.afterEach( () => driver.manage().deleteAllCookies() );
+
+	test.after( () => driver.quit() );
 } );
-
-test.afterEach( () => driver.manage().deleteAllCookies() );
-
-test.after( () => driver.quit() );
