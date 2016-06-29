@@ -3,6 +3,7 @@ import webdriver from 'selenium-webdriver';
 import test from 'selenium-webdriver/testing';
 import config from 'config';
 import WebDriverJsDemoPage from '../lib/webdriver-js-demo-page.js';
+import WebDriverJsErrorPage from '../lib/webdriver-js-error-page.js';
 
 let driver = null;
 
@@ -10,17 +11,33 @@ const mochaTimeoutMS = config.get( 'mochaTimeoutMS' );
 
 test.before( function() {
 	this.timeout( mochaTimeoutMS );
-	driver = new webdriver.Builder().withCapabilities( webdriver.Capabilities.chrome() ).build();
+	let pref = new webdriver.logging.Preferences();
+	pref.setLevel( 'browser', webdriver.logging.Level.SEVERE );
+	driver = new webdriver.Builder().forBrowser( 'chrome' ).setLoggingPrefs( pref ).build();
 } );
 
 test.describe( 'WebDriverJsDemo', function() {
 	this.timeout( mochaTimeoutMS );
 
 	test.it( 'can wait for an element to appear', function() {
-		var page = new WebDriverJsDemoPage( driver, true );
+		let page = new WebDriverJsDemoPage( driver, true );
 		page.waitForChildElementToAppear();
 		page.childElementPresent().then( function( present ) {
 			assert.equal( present, true, 'The child element is not present' );
+		} );
+	} );
+
+	test.it( 'can check for errors when there should be none', function() {
+		let page = new WebDriverJsDemoPage( driver, true );
+		page.consoleErrors().then( ( errors ) => {
+			assert.deepEqual( errors, [] );
+		} );
+	} );
+
+	test.it( 'can check for errors when there are present', function() {
+		let page = new WebDriverJsErrorPage( driver, true );
+		page.consoleErrors().then( ( errors ) => {
+			assert.deepEqual( errors, [ 'http://webdriverjsdemo.github.io/scripts/error.js 1:1 Uncaught Purple Monkey Dishwasher Error' ] );
 		} );
 	} );
 } );
