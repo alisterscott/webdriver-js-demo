@@ -22,7 +22,6 @@ test.describe( 'WebDriverJsDemo', function() {
 
 	test.it( 'can wait for an element to appear', function() {
 		let page = new WebDriverJsDemoPage( driver, true );
-		assert( false );
 		page.waitForChildElementToAppear();
 		page.childElementPresent().then( ( present ) => {
 			assert.equal( present, true, 'The child element is not present' );
@@ -31,7 +30,6 @@ test.describe( 'WebDriverJsDemo', function() {
 
 	test.it( 'can check for an alert when leaving the page', function() {
 		let page = new WebDriverJsLeavePage( driver, true );
-		assert( false, 'An unexpected error!' );
 		page.navHome();
 	} );
 
