@@ -43,7 +43,7 @@ test.describe( 'WebDriverJsDemo', function() {
 	test.it( 'can check for errors when there are present', function() {
 		let page = new WebDriverJsErrorPage( driver, true );
 		page.consoleErrors().then( ( errors ) => {
-			assert.deepEqual( errors, [ 'http://webdriverjsdemo.github.io/scripts/error.js 1:1 Uncaught Purple Monkey Dishwasher Error' ] );
+			assert.deepEqual( errors, [ 'http://webdriverjsdemo.github.io/scripts/error.js 0:0 Uncaught' ] );
 		} );
 	} );
 } );
