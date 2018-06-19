@@ -10,7 +10,7 @@ let driver = null;
 
 const mochaTimeoutMS = config.get( 'mochaTimeoutMS' );
 
-test.before( async function() {
+before( async function() {
 	this.timeout( mochaTimeoutMS );
 	const pref = new webdriver.logging.Preferences();
 	pref.setLevel( 'browser', webdriver.logging.Level.SEVERE );
@@ -18,35 +18,35 @@ test.before( async function() {
 	driver = await builder.build();
 } );
 
-test.describe( 'WebDriverJsDemo', function() {
+describe( 'WebDriverJsDemo', function() {
 	this.timeout( mochaTimeoutMS );
 
-	test.it( 'can wait for an element to appear', async function() {
+	it( 'can wait for an element to appear', async function() {
 		const page = await WebDriverJsDemoPage.Visit( driver );
 		await page.waitForChildElementToAppear();
 		assert( await page.childElementPresent(), 'The child element is not present' );
 	} );
 
-	test.it( 'can check for an alert when leaving the page', async function() {
+	it( 'can check for an alert when leaving the page', async function() {
 		const page = await WebDriverJsLeavePage.Visit( driver );
 		await page.navHome();
 	} );
 
-	test.it( 'can check for errors when there should be none', async function() {
+	it( 'can check for errors when there should be none', async function() {
 		const page = await WebDriverJsDemoPage.Visit( driver );
 		const errors = await page.consoleErrors();
 		assert.deepEqual( errors, [] );
 	} );
 
-	test.it( 'can check for errors when there are present', async function() {
+	it( 'can check for errors when there are present', async function() {
 		const page = await WebDriverJsErrorPage.Visit( driver );
 		const errors = await page.consoleErrors();
 		assert.deepEqual( errors, [ 'http://webdriverjsdemo.github.io/scripts/error.js 0:0 Uncaught' ] );
 	} );
 } );
 
-test.afterEach( async function() {
-	if ( this.currentTest.state === 'failed' ) {
+afterEach( async function() {
+	if ( this.currentstate === 'failed' ) {
 		await driver.get( 'data:,' );
 		await driver.switchTo().alert().then( ( alert ) => {
 			alert.accept();
@@ -55,4 +55,4 @@ test.afterEach( async function() {
 	await driver.manage().deleteAllCookies()
 } );
 
-test.after( async function() { await driver.quit(); } );
+after( async function() { await driver.quit(); } );

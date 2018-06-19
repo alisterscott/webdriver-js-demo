@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "./node_modules/.bin/mocha --require babel-core/register specs"
+    "test": "env SELENIUM_PROMISE_MANAGER=0 ./node_modules/.bin/mocha --require babel-core/register specs"
   },
   "repository": {
     "type": "git",
