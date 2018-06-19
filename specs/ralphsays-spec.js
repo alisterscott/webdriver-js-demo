@@ -8,28 +8,25 @@ let driver;
 
 const mochaTimeoutMS = config.get( 'mochaTimeoutMS' );
 
-test.describe( 'Ralph Says', function() {
+describe( 'Ralph Says', function() {
 	this.timeout( mochaTimeoutMS );
 
-	test.before( function() {
-		driver = new webdriver.Builder().withCapabilities( webdriver.Capabilities.chrome() ).build();
+	before( async function() {
+		const builder = new webdriver.Builder().withCapabilities( webdriver.Capabilities.chrome() );
+		driver = await builder.build();
 	} );
 
-	test.it( 'shows a quote container', function() {
-		var page = new RalphSaysPage( driver, true );
-		page.quoteContainerPresent().then( function( present ) {
-			assert.equal( present, true, 'Quote container not displayed' );
-		} );
+	it( 'shows a quote container', async function() {
+		const page = await RalphSaysPage.Visit( driver );
+		assert( await page.quoteContainerPresent(), 'Quote container not displayed' );
 	} );
 
-	test.it( 'shows a non-empty quote', function() {
-		var page = new RalphSaysPage( driver, true );
-		page.quoteTextDisplayed().then( function( text ) {
-			assert.notEqual( text, '', 'Quote is empty' );
-		} );
+	it( 'shows a non-empty quote', async function() {
+		const page = await RalphSaysPage.Visit( driver );
+		assert.notEqual( await page.quoteTextDisplayed(), '', 'Quote is empty' );
 	} );
 
-	test.afterEach( () => driver.manage().deleteAllCookies() );
+	afterEach( async function() { await driver.manage().deleteAllCookies(); } );
 
-	test.after( () => driver.quit() );
+	after( async function() { await driver.quit(); } );
 } );

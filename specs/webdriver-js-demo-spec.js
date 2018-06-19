@@ -2,60 +2,57 @@ import assert from 'assert';
 import webdriver from 'selenium-webdriver';
 import test from 'selenium-webdriver/testing';
 import config from 'config';
-import WebDriverJsDemoPage from '../lib/webdriver-js-demo-page.js';
-import WebDriverJsErrorPage from '../lib/webdriver-js-error-page.js';
-import WebDriverJsLeavePage from '../lib/webdriver-js-leave-page.js';
+import WebDriverJsDemoPage from '../lib/webdriver-js-demo-page';
+import WebDriverJsErrorPage from '../lib/webdriver-js-error-page';
+import WebDriverJsLeavePage from '../lib/webdriver-js-leave-page';
 
 let driver = null;
 
 const mochaTimeoutMS = config.get( 'mochaTimeoutMS' );
 
-test.before( function() {
+before( async function() {
 	this.timeout( mochaTimeoutMS );
-	let pref = new webdriver.logging.Preferences();
+	const pref = new webdriver.logging.Preferences();
 	pref.setLevel( 'browser', webdriver.logging.Level.SEVERE );
-	driver = new webdriver.Builder().forBrowser( 'chrome' ).setLoggingPrefs( pref ).build();
+	const builder = new webdriver.Builder().forBrowser( 'chrome' ).setLoggingPrefs( pref )
+	driver = await builder.build();
 } );
 
-test.describe( 'WebDriverJsDemo', function() {
+describe( 'WebDriverJsDemo', function() {
 	this.timeout( mochaTimeoutMS );
 
-	test.it( 'can wait for an element to appear', function() {
-		let page = new WebDriverJsDemoPage( driver, true );
-		page.waitForChildElementToAppear();
-		page.childElementPresent().then( ( present ) => {
-			assert.equal( present, true, 'The child element is not present' );
-		} );
+	it( 'can wait for an element to appear', async function() {
+		const page = await WebDriverJsDemoPage.Visit( driver );
+		await page.waitForChildElementToAppear();
+		assert( await page.childElementPresent(), 'The child element is not present' );
 	} );
 
-	test.it( 'can check for an alert when leaving the page', function() {
-		let page = new WebDriverJsLeavePage( driver, true );
-		page.navHome();
+	it( 'can check for an alert when leaving the page', async function() {
+		const page = await WebDriverJsLeavePage.Visit( driver );
+		await page.navHome();
 	} );
 
-	test.it( 'can check for errors when there should be none', function() {
-		let page = new WebDriverJsDemoPage( driver, true );
-		page.consoleErrors().then( ( errors ) => {
-			assert.deepEqual( errors, [] );
-		} );
+	it( 'can check for errors when there should be none', async function() {
+		const page = await WebDriverJsDemoPage.Visit( driver );
+		const errors = await page.consoleErrors();
+		assert.deepEqual( errors, [] );
 	} );
 
-	test.it( 'can check for errors when there are present', function() {
-		let page = new WebDriverJsErrorPage( driver, true );
-		page.consoleErrors().then( ( errors ) => {
-			assert.deepEqual( errors, [ 'http://webdriverjsdemo.github.io/scripts/error.js 0:0 Uncaught' ] );
-		} );
+	it( 'can check for errors when there are present', async function() {
+		const page = await WebDriverJsErrorPage.Visit( driver );
+		const errors = await page.consoleErrors();
+		assert.deepEqual( errors, [ 'http://webdriverjsdemo.github.io/scripts/error.js 0:0 Uncaught' ] );
 	} );
 } );
 
-test.afterEach( function() {
-	if ( this.currentTest.state === 'failed' ) {
-		driver.get( 'data:,' );
-		driver.switchTo().alert().then( ( alert ) => {
+afterEach( async function() {
+	if ( this.currentstate === 'failed' ) {
+		await driver.get( 'data:,' );
+		await driver.switchTo().alert().then( ( alert ) => {
 			alert.accept();
 		}, () => {} );
 	}
-	driver.manage().deleteAllCookies()
+	await driver.manage().deleteAllCookies()
 } );
 
-test.after( () => driver.quit() );
+after( async function() { await driver.quit(); } );
