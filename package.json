@@ -12,11 +12,12 @@
     "eslint": "^4.19.1",
     "lodash": "^4.13.1",
     "mocha": "^5.2.0",
+    "mocha-steps": "^1.1.0",
     "selenium-webdriver": "^3.3.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "env SELENIUM_PROMISE_MANAGER=0 ./node_modules/.bin/mocha --require babel-core/register specs"
+    "test": "env SELENIUM_PROMISE_MANAGER=0 ./node_modules/.bin/mocha --require babel-core/register --require mocha-steps specs"
   },
   "repository": {
     "type": "git",
