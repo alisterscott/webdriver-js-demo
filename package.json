@@ -18,7 +18,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "env SELENIUM_PROMISE_MANAGER=0 ./node_modules/.bin/mocha-parallel-tests --require babel-core/register --require mocha-steps specs"
+    "test": "env SELENIUM_PROMISE_MANAGER=0 ./node_modules/.bin/mocha-parallel-tests --require babel-core/register --require mocha-steps specs",
+    "gauge": "gauge run gauge-specs/"
   },
   "repository": {
     "type": "git",
