@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: Install Gauge
-          command: curl -SsL https://downloads.gauge.org/stable | sh
+          command: sudo apt-get install gauge
       - restore_cache:
           key: 'dependency-cache-{{ checksum "package.json" }}'
       - run: npm ci
