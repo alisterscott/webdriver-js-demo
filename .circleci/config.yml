@@ -20,4 +20,4 @@ jobs:
           command: npm test
       - run:
           name: Gauge Specs
-          command: npm gauge
+          command: npm run gauge
