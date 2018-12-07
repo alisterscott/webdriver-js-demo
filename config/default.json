@@ -1,5 +1,4 @@
 {
-  "ralphURL": "http://juicedpixels.github.io/ralphsays",
   "demoURL": "http://webdriverjsdemo.github.io",
   "explicitWaitMS": 2000,
   "mochaTimeoutMS": 30000
