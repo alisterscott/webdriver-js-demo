@@ -6,12 +6,15 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: 'dependency-cache-{{ checksum "package.json" }}'
+          keys:
+            - v1-npmcache-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
+            - v1-npmcache-{{ checksum ".nvmrc" }}
+            - v1-npmcache
       - run: npm ci
       - save_cache:
-          key: 'dependency-cache-{{ checksum "package.json" }}'
+          key: v1-npmcache-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
           paths:
-            - ./node_modules
+            - "~/.npm"
       - run:
           name: Execute the e2e tests
           command: npm test
