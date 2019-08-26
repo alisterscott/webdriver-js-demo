@@ -4,6 +4,7 @@ import test from 'selenium-webdriver/testing';
 import config from 'config';
 import WebDriverJsDemoPage from '../lib/webdriver-js-demo-page';
 import WebDriverJsErrorPage from '../lib/webdriver-js-error-page';
+import WebDriverJsExpandPage from '../lib/webdriver-js-expand-page';
 import WebDriverJsLeavePage from '../lib/webdriver-js-leave-page';
 
 let driver = null;
@@ -43,6 +44,25 @@ describe( 'WebDriverJsDemo', function() {
 		const errors = await page.consoleErrors();
 		assert.deepEqual( errors, [ 'http://webdriverjsdemo.github.io/scripts/error.js 0:0 Uncaught' ] );
 	} );
+
+	it( 'can check if an element is not open and only expand it if necessary', async function() {
+		const page = await WebDriverJsExpandPage.Visit( driver );
+		await page.expandJokeIfNecessary()
+		assert.equal( await page.getPunchline(), "When you're eating a watermelon!")
+	} );
+
+	it( 'can assume the element is not open so always click it', async function() {
+		const page = await WebDriverJsExpandPage.Visit( driver );
+		await page.expandJoke()
+		assert.equal( await page.getPunchline(), "When you're eating a watermelon!")
+	} );
+
+	it( 'can expect the element defaults to closed so always click it', async function() {
+		const page = await WebDriverJsExpandPage.Visit( driver );
+		await page.assertAndExpandJoke()
+		assert.equal( await page.getPunchline(), "When you're eating a watermelon!")
+	} );
+
 } );
 
 afterEach( async function() {
