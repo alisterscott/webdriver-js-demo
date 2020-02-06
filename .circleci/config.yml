@@ -10,11 +10,17 @@ jobs:
             - v1-npmcache-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
             - v1-npmcache-{{ checksum ".nvmrc" }}
             - v1-npmcache
-      - run: npm ci
+      - run: npm i
       - save_cache:
           key: v1-npmcache-{{ checksum ".nvmrc" }}-{{ checksum "package-lock.json" }}
           paths:
             - "~/.npm"
+      - run:
+          name: Update Chrome to latest
+          command: |
+            sudo apt-get install lsb-release
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo dpkg -i google-chrome-stable_current_amd64.deb
       - run:
           name: Execute the e2e tests
           command: npm test
